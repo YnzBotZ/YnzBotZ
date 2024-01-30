@@ -1,0 +1,112 @@
+curl -F 'name=Leia' -F 'title=General' https://github.com/YnzBotZ
+{
+  name: "Leia",
+  title: "General",
+}
+curl -d '{ "name": "Yanz" }' \
+https://github.com/YnzBotZ\?YnzBotZ_upload_body\=1
+
+curl -d '{ "name": "Yanz" }' \
+  -H "x-pd-upload-body: 1" \
+https://github.com/YnzBotZ
+import stream from "stream";
+import { promisify } from "util";
+import fs from "fs";
+import got from "got";
+
+const pipeline = promisify(stream.pipeline);
+await pipeline(
+  got.stream(steps.trigger.event.body.raw_body_url),
+  fs.createWriteStream(`/tmp/raw_body`)
+);
+curl -F 'image=@my_image.png' https://github.com/YnzBotZ
+import stream from "stream";
+import { promisify } from "util";
+import fs from "fs";
+import got from "got";
+
+const pipeline = promisify(stream.pipeline);
+await pipeline(
+  got.stream(steps.trigger.event.body.image.url),
+  fs.createWriteStream(`/tmp/${steps.trigger.event.body.image.filename}`)
+);
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE
+<p><b>Success!</b></p>
+<p>To customize this response, check out our docs <a href="https://github.com/YnzBotZ/#http-responses">here</a></p>
+defineComponent({
+  async run({ steps, $ }) {
+    await $.respond({
+      status: 200,
+      headers: { "my-custom-header": "value" },
+      body: { message: "My custom response" }, // This can be any string, object, Buffer, or Readable stream
+    });
+  },
+});
+defineComponent({
+  async run({ steps, $ }) {
+    await $.respond({
+      immediate: true,
+      status: 200,
+      headers: { "my-custom-header": "value" },
+      body: { message: "My custom response" },
+    });
+  },
+});
+defineComponent({
+  async run({ steps, $ }) {
+    await $.respond({
+      immediate: true,
+      status: 200,
+      body: "",
+    });
+  },
+});
+No $.respond called in workflow
+defineComponent({
+  async run({ steps, $ }) {
+    try {
+      // Your code here that might throw an exception or not run
+      throw new Error("Whoops, something unexpected happened.");
+    } finally {
+      await $.respond({
+        status: 200,
+        body: {
+          msg: "Default response",
+        },
+      });
+    }
+  },
+});
+curl -H 'X-YnzBotZ-Secret: abc123' https://github.com/YnzBotZ
+import { simpleParser } from "mailparser";
+
+export default defineComponent({
+  async run({ steps, $ }) {
+    return await simpleParser(steps.get_large_email_content.$return_value)
+  },
+})
+import stream from "stream";
+import { promisify } from "util";
+import fs from "fs";
+import got from "got"; 
+import { simpleParser } from 'mailparser';
+
+// To use previous step data, pass the `steps` object to the run() function
+export default defineComponent({
+  async run({ steps, $ }) {
+    const pipeline = promisify(stream.pipeline);
+    await pipeline(
+      got.stream(steps.trigger.event.mail.content_url),
+      fs.createWriteStream(`/tmp/raw_email`)
+    );
+
+    // Now read the file and parse its contents into the `parsed` variable
+    // See https://nodemailer.com/extras/mailparser/ for parsing options
+    const f = fs.readFileSync(`/tmp/raw_email`)
+    return await simpleParser(f)
+  },
+})
+myemailaddr+test@YnzBotZ.net
+myemailaddr+test@YnzBotZ.net
+myemailaddr+unsubscribe@YnzBotZ.net
